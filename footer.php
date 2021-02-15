@@ -38,7 +38,8 @@
 
 			<div class="copy">
 				<div class="container">
-					<p class="grid-16">Bikcraft 2015 - Alguns direitos reservados.</p>
+					<p class="grid-16"><?php echo date("Y"); ?> - Alguns direitos reservados.</p>
+					<p>Desenvolvido por Leonardo Pilatti</p>
 				</div>
 			</div>
 		</footer>

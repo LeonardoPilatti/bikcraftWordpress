@@ -26,8 +26,9 @@
 
 		<header class="header">
 			<div class="container">
-				<a href="index.html" class="grid-4">
-					<img src="img/bikcraft.png" alt="Bikcraft">
+				<a href="/home/" class="grid-4">
+					<img src="<?php echo get_template_directory_uri(); ?>/img/bikcraft.png" alt="Bikcraft">
+					<!-- esse echo get_template_directory é para pegar a imagem que está na pasta img -->
 				</a>
 				<nav class="grid-12 header_menu">
 					<ul>
