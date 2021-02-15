@@ -1,0 +1,126 @@
+0- Baixar no site 'local.getflywheel.com' o wordpress e o programa para conseguir emular um servidor;
+0.1- 'testewp.test/wp´-admin/'  para abrir a página de controle do wordpress;
+0.2- plug-in 'disable guttemberg' para ficar com o tema antigo do wordpress pois é melhor; 
+
+1 - Copiar a pasta do site para wp-content/themes/
+
+2 - Mudar o index.html para index.php
+
+3 - Colocar/criar o arquivo style.css na raiz do tema
+
+4 - Adicionar a descrição do tema no topo do style.css
+/*
+Theme Name: Rest
+Theme URI: http://rest.com
+Author: André Rafael
+Author URI: http://origamid.com/
+Description: Tema criado para o restaurante Rest
+Version: 1.0
+*/
+
+5 - Ativar o tema no Wordpress
+
+6 - Corrigir o caminho do style.css e outros caminhos se necessário
+<?php echo get_stylesheet_directory_uri(); ?>
+Essa função adiciona o caminho até a raiz do tema
+
+7 - Separar o header e footer em arquivos header.php e footer.php
+Adicionar antes de fechar o head: <?php wp_head(); ?>
+Adicionar antes de fechar o body: <?php wp_footer(); ?>
+Adicionar o header e footer nas páginas do site e mudá-las para .php
+Com <?php get_header(); ?> e <?php get_footer(); ?>
+
+8 - Começar a substituir o conteúdo por funções de Wordpress
+
+<?php bloginfo('name'); ?>      /// no tittle no header.php    /// para alterar o nome vai no wordpress em configuracoes -> geral -> titulo do site;
+Mostra o nome do blog
+
+
+9 - Adicionar as páginas na interface do Wordpress  
+ /// páginas -> adicionar nova -> atributo da página -> modelo // e aí mudar para o template que quero;
+ /// ir em configurações -> leitura -> sua pagina inicial exibe -> selecionar uma pagina estatica
+
+10 - Transformar as páginas em HTML, em templates de Páginas
+A página index.php deve estar reservada para conteúdo genérico.
+Adicionar o nome page- na frente de cada template de página para facilitar a organização.
+<?php
+// Template Name: Sobre
+?>
+
+11 - Adicionar o Loop
+O Loop é utilizado para mostrar o conteúdo dos posts,
+ele é inteligente o suficiente para saber se precisa mostrar apenas um ou uma sequência.
+
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+/// se tiver poste, while ( faça a postagem ), the_post ( até que tenha post );
+
+    <?php the_title(); ?>
+	<?php the_content(); ?>
+// Aqui vai o conteúdo
+
+<?php endwhile; else: ?>     /// else, se não tiver o post, apresente a mensagem de que não tem post;
+<p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
+<?php endif; ?>     // aqui termina o if
+
+12 - Criar campos personalizados para edição:
+/// páginas -> entrar em uma delas, tipo o Contato -> Opções de Tela (no canto superior direito) -> marcar Campos Personalizados;
+
+13 - Modificar o HTML com o CMB2:   /// CMB2 é um plugin do Wordpress;  /// https://github.com/CMB2/CMB2/wiki/Field-Types
+	<p>
+		<?php
+			$home = get_page_by_title('Menu da Semana')->ID;  /// aqui estou selecionando a página pelo titulo dela
+			the_field('comida1', $home);    /// aqui estou usando a funcao the_field do functions.php, passando o ID e a página que está
+		?>
+	</p>
+
+/// se for somente na página que quero mudar, coloco: <?php the_field('comida1'); ?>
+
+14 - Para o ano aparecer automaticamente no site, coloco <?php echo date("Y"); ?> onde quero o ano;
+
+15 - Terminar de adicionar os outros campos
+<?php echo date("Y"); ?> (Mostrar a data)
+
+16 - Adicionar campos para SEO
+<title><?php bloginfo('name'); ?> - <?php wp_title(''); ?> <?php the_field('title_seo'); ?></title>
+<meta name="description" content="<?php bloginfo('name'); ?> - <?php wp_title(''); ?> <?php the_field('description_seo'); ?>">
+
+17 - Adicionar o Functions.php
+
+// Funções para Limpar o Header  // adicionar no function.php
+remove_action('wp_head', 'rsd_link');
+remove_action('wp_head', 'wlwmanifest_link');
+remove_action('wp_head', 'start_post_rel_link', 10, 0 );
+remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+remove_action('wp_head', 'feed_links_extra', 3);
+remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('admin_print_scripts', 'print_emoji_detection_script');
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_action('admin_print_styles', 'print_emoji_styles');
+
+18 - Adicionar o Menu
+
+// Habilitar Menus  /// vai no wp-admin -> aparência -> Menus (e aí adiciona os menus)
+add_theme_support('menus');			/// adiciona no function.php
+
+
+
+function register_my_menu() {
+  register_nav_menu('header-menu',__( 'Header Menu' ));
+}
+add_action( 'init', 'register_my_menu' );
+
+
+/// adiciona no lugar do menu no Header.php
+<?php
+	$args = array(
+		'menu' => 'principal',
+		'container' => false
+	);
+	wp_nav_menu( $args );
+?>
+
+19 - para mudar a cor da página:
+.nav-footer .current_page_item a {
+	color: #f17060;
+}
