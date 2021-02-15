@@ -1,5 +1,5 @@
 0- Baixar no site 'local.getflywheel.com' o wordpress e o programa para conseguir emular um servidor;
-0.1- 'testewp.test/wp´-admin/'  para abrir a página de controle do wordpress;
+0.1- 'testewp.test/wp-admin/'  para abrir a página de controle do wordpress;
 0.2- plug-in 'disable guttemberg' para ficar com o tema antigo do wordpress pois é melhor; 
 
 1 - Copiar a pasta do site para wp-content/themes/
@@ -20,7 +20,7 @@ Version: 1.0
 
 5 - Ativar o tema no Wordpress
 
-6 - Corrigir o caminho do style.css e outros caminhos se necessário
+6 - Corrigir o caminho do style.css e outros caminhos se necessário  /// adicionar no index.php no link do style.css
 <?php echo get_stylesheet_directory_uri(); ?>
 Essa função adiciona o caminho até a raiz do tema
 
@@ -41,7 +41,7 @@ Mostra o nome do blog
  /// ir em configurações -> leitura -> sua pagina inicial exibe -> selecionar uma pagina estatica
 
 10 - Transformar as páginas em HTML, em templates de Páginas
-A página index.php deve estar reservada para conteúdo genérico.
+A página index.php deve estar reservada para conteúdo genérico. /// copiar e colar a 'index.php' e mudar o nome para 'page-home.php';
 Adicionar o nome page- na frente de cada template de página para facilitar a organização.
 <?php
 // Template Name: Sobre
